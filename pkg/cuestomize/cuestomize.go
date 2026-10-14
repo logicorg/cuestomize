@@ -39,6 +39,13 @@ func Cuestomize(ctx context.Context, items []*kyaml.RNode, config *api.KRMInput,
 	if err != nil {
 		return nil, fmt.Errorf("failed to compute includes from KRM function inputs: %w", err)
 	}
+
+	pruneLabels := ShouldPruneLabels(config)
+	pruneAnnotations := ShouldPruneAnnotations(config)
+	if pruneLabels || pruneAnnotations {
+		includes.PruneNullMetadata(pruneLabels, pruneAnnotations)
+	}
+
 	includesValue, err := includes.IntoCueValue(cueCtx)
 	if err != nil {
 		return nil, detailer.ErrorWithDetails(err, "failed to convert includes into CUE value")
