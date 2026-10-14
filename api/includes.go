@@ -20,6 +20,19 @@ func (i Includes) Add(include *kyaml.RNode) {
 	i[include.GetApiVersion()][include.GetKind()][include.GetNamespace()][include.GetName()] = any(include)
 }
 
+// PruneNullMetadata prunes labels or annotations set to explicit null if requested
+func (i Includes) PruneNullMetadata(labels, annotations bool) {
+	for _, o := range i { // apiVersion
+		for _, o := range o { // kind
+			for _, o := range o { // namespace
+				for _, o := range o { // name
+					cleanObject(o, labels, annotations)
+				}
+			}
+		}
+	}
+}
+
 func (i Includes) initialiseMap(include *kyaml.RNode) {
 	apiVersion := include.GetApiVersion()
 	kind := include.GetKind()
@@ -41,5 +54,32 @@ func (i Includes) initialiseMap(include *kyaml.RNode) {
 	// name
 	if _, ok := i[apiVersion][kind][namespace][name]; !ok {
 		i[apiVersion][kind][namespace][name] = make(map[string]interface{})
+	}
+}
+
+func dropNullLabelsAnnotations(md interface{}, labels, annotations bool) {
+	if m, ok := md.(map[string]interface{}); ok {
+		if labels {
+			if x, exists := m["labels"]; exists && x == nil {
+				delete(m, "labels")
+			}
+		}
+		if annotations {
+			if x, exists := m["annotations"]; exists && x == nil {
+				delete(m, "annotations")
+			}
+		}
+	}
+}
+
+func cleanObject(o interface{}, labels, annotations bool) {
+	obj := o.(map[string]interface{})
+
+	dropNullLabelsAnnotations(obj["metadata"], labels, annotations)
+
+	if spec, ok := obj["spec"].(map[string]interface{}); ok {
+		if tmpl, ok := spec["template"].(map[string]interface{}); ok {
+			dropNullLabelsAnnotations(tmpl["metadata"], labels, annotations)
+		}
 	}
 }
