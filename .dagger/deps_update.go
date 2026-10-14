@@ -9,7 +9,7 @@ import (
 func (m *Cuestomize) Renovate(
 	ctx context.Context,
 	githubToken *dagger.Secret,
-	// +default="Workday/cuestomize"
+	// +default="logicorg/cuestomize"
 	repo string,
 	// +default=false
 	dryRun bool,

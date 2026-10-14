@@ -6,9 +6,9 @@ import (
 
 	"cuelang.org/go/cue"
 	"cuelang.org/go/cue/cuecontext"
-	"github.com/Workday/cuestomize/api"
-	"github.com/Workday/cuestomize/pkg/cuerrors"
 	"github.com/go-logr/logr"
+	"github.com/logicorg/cuestomize/api"
+	"github.com/logicorg/cuestomize/pkg/cuerrors"
 	kyaml "sigs.k8s.io/kustomize/kyaml/yaml"
 )
 

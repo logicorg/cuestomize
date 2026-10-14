@@ -10,7 +10,7 @@ You need to select a Kubernetes Secret through the `.remoteModule.auth` field:
 
 ```yaml
 remoteModule:
-  ref: ghcr.io/workday/cuestomize/cuemodules/cuestomize-examples-simple:latest
+  ref: ghcr.io/logicorg/cuestomize/cuemodules/cuestomize-examples-simple:latest
   auth:
     kind: Secret
     name: oci-auth
@@ -83,7 +83,7 @@ metadata:
   annotations:
     config.kubernetes.io/function: |
       container:
-        image: ghcr.io/workday/cuestomize:latest
+        image: ghcr.io/logicorg/cuestomize:latest
         network: true
         envs: [REGISTRY_USERNAME, REGISTRY_PASSWORD]
 ```
@@ -108,7 +108,7 @@ metadata:
   annotations:
     config.kubernetes.io/function: |
       container:
-        image: ghcr.io/workday/cuestomize:latest
+        image: ghcr.io/logicorg/cuestomize:latest
         network: true
         envs:
         - REGISTRY_USERNAME="<username>"

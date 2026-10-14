@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"cuelang.org/go/cue/build"
-	"github.com/Workday/cuestomize/api"
-	"github.com/Workday/cuestomize/pkg/cuerrors"
+	"github.com/logicorg/cuestomize/api"
+	"github.com/logicorg/cuestomize/pkg/cuerrors"
 )
 
 const (

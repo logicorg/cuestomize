@@ -27,7 +27,7 @@ metadata:
 ~  annotations:
 ~    config.kubernetes.io/function: |
 ~      container:
-~        image: ghcr.io/workday/cuestomize:latest
+~        image: ghcr.io/logicorg/cuestomize:latest
 ~        network: true
 input:
   configMapName: my-config
@@ -122,7 +122,7 @@ metadata:
 ~  annotations:
 ~    config.kubernetes.io/function: |
 ~      container:
-~        image: ghcr.io/workday/cuestomize:latest
+~        image: ghcr.io/logicorg/cuestomize:latest
 ~        network: true
 input:
   deploymentName: nginx-deployment
@@ -263,7 +263,7 @@ metadata:
     config.cuestomize.io/validator: "true"
 ~    config.kubernetes.io/function: |
 ~      container:
-~        image: ghcr.io/workday/cuestomize:latest
+~        image: ghcr.io/logicorg/cuestomize:latest
 ~        network: true
 includes:
   - group: apps

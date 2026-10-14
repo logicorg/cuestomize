@@ -9,7 +9,7 @@ You can do this by specifying a `remoteModule` field in your Cuestomization reso
 {{#include ../../../examples/simple/kustomize/krm-func.yaml}}
 ```
 
-In this example, we are pulling the `ghcr.io/workday/cuestomize/cuemodules/cuestomize-examples-simple` module at the `latest` tag.
+In this example, we are pulling the `ghcr.io/logicorg/cuestomize/cuemodules/cuestomize-examples-simple` module at the `latest` tag.
 Just by specifying `.remoteModule.ref`, Cuestomize will try to pull the module from the public registry before doing its processing.
 
 Obviously, the OCI reference pulled must be a valid CUE module in order for Cuestomize to process it correctly.

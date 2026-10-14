@@ -3,7 +3,7 @@ package api
 import (
 	"testing"
 
-	"github.com/Workday/cuestomize/internal/pkg/testhelpers"
+	"github.com/logicorg/cuestomize/internal/pkg/testhelpers"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"sigs.k8s.io/kustomize/api/types"

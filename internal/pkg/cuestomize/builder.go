@@ -7,7 +7,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/Workday/cuestomize/api"
+	"github.com/logicorg/cuestomize/api"
 	kyaml "sigs.k8s.io/kustomize/kyaml/yaml"
 )
 

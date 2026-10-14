@@ -55,9 +55,9 @@ func (m *Cuestomize) Build(
 	container = container.
 		WithAnnotation("org.opencontainers.image.title", "Cuestomize").
 		WithAnnotation("org.opencontainers.image.description", "KRM function integrating CUE with Kustomize for Kubernetes configuration management").
-		WithAnnotation("org.opencontainers.image.documentation", "https://workday.github.io/cuestomize").
+		WithAnnotation("org.opencontainers.image.documentation", "https://logicorg.github.io/cuestomize").
 		WithAnnotation("org.opencontainers.image.created", time.Now().UTC().Format(time.RFC3339)).
-		WithAnnotation("org.opencontainers.image.source", "https://github.com/Workday/cuestomize").
+		WithAnnotation("org.opencontainers.image.source", "https://github.com/logicorg/cuestomize").
 		WithAnnotation("org.opencontainers.image.version", strings.TrimPrefix(version, "v")).
 		WithAnnotation("org.opencontainers.image.revision", commit)
 

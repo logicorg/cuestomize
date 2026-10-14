@@ -41,7 +41,7 @@ metadata:
     config.kubernetes.io/function: |
       container:
         # the Cuestomize image you want to use
-        image: ghcr.io/workday/cuestomize:latest
+        image: ghcr.io/logicorg/cuestomize:latest
 
         # this is required to pull the CUE module from a registry
         network: true

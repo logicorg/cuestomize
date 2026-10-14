@@ -9,10 +9,10 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/Workday/cuestomize/api"
-	krm "github.com/Workday/cuestomize/internal/pkg/cuestomize"
-	"github.com/Workday/cuestomize/internal/pkg/processor"
 	"github.com/go-logr/logr"
+	"github.com/logicorg/cuestomize/api"
+	krm "github.com/logicorg/cuestomize/internal/pkg/cuestomize"
+	"github.com/logicorg/cuestomize/internal/pkg/processor"
 
 	"sigs.k8s.io/kustomize/kyaml/fn/framework/command"
 	"sigs.k8s.io/kustomize/kyaml/kio"

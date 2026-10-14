@@ -3,8 +3,8 @@ package cuestomize
 import (
 	"testing"
 
-	"github.com/Workday/cuestomize/api"
-	"github.com/Workday/cuestomize/internal/pkg/testhelpers"
+	"github.com/logicorg/cuestomize/api"
+	"github.com/logicorg/cuestomize/internal/pkg/testhelpers"
 	"sigs.k8s.io/kustomize/kyaml/resid"
 
 	"github.com/stretchr/testify/require"

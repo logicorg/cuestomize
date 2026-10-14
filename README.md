@@ -1,6 +1,6 @@
 # Cuestomize
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/workday/cuestomize.svg)](https://pkg.go.dev/github.com/workday/cuestomize)
+[![Go Reference](https://pkg.go.dev/badge/github.com/logicorg/cuestomize.svg)](https://pkg.go.dev/github.com/logicorg/cuestomize)
 
 Cuestomize is a Kubernetes Package Manager using CUE-lang and integrated in Kustomize.
 
@@ -29,7 +29,7 @@ If you have a compatible CUE model already, you can use from kustomize as follow
     annotations:
       config.kubernetes.io/function: |
         container:
-          image: ghcr.io/workday/cuestomize:latest
+          image: ghcr.io/logicorg/cuestomize:latest
           network: true
   input:
     replicas: 3

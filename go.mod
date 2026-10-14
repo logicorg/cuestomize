@@ -1,4 +1,4 @@
-module github.com/Workday/cuestomize
+module github.com/logicorg/cuestomize
 
 go 1.26.4
 

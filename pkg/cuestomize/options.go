@@ -3,7 +3,7 @@ package cuestomize
 import (
 	"fmt"
 
-	"github.com/Workday/cuestomize/pkg/cuestomize/model"
+	"github.com/logicorg/cuestomize/pkg/cuestomize/model"
 )
 
 // Option defines a functional option for configuring Cuestomize.
