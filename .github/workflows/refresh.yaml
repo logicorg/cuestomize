@@ -50,6 +50,6 @@ jobs:
         REPOSITORY: "logicorg/cuestomize"
         PLATFORMS: "linux/amd64,linux/arm64"
       with:
-        version: "0.21.7"
+        version: "0.21.10"
         verb: call
         args: build-and-publish --repository="$REPOSITORY" --ref="$VERSION" --version="$VERSION" --latest="$LATEST" --username="$GITHUB_USER" --password=env:GITHUB_TOKEN --platforms="$PLATFORMS"
