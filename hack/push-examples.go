@@ -9,8 +9,8 @@ import (
 	"path"
 	"strings"
 
-	"github.com/Workday/cuestomize/pkg/oci"
 	"github.com/go-logr/logr"
+	"github.com/logicorg/cuestomize/pkg/oci"
 	"oras.land/oras-go/v2/registry/remote/auth"
 )
 

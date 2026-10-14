@@ -10,7 +10,7 @@ import (
 // RemoteModule defines the structure to describe a remote CUE module to fetch from an OCI registry.
 type RemoteModule struct {
 	// Ref is the full OCI reference in the format: registry/repo:tag
-	// Example: ghcr.io/workday/my-module:v1.0.0
+	// Example: ghcr.io/logicorg/my-module:v1.0.0
 	// If Ref is specified, it takes precedence over Registry, Repo, and Tag.
 	Ref string `yaml:"ref,omitempty" json:"ref,omitempty"`
 

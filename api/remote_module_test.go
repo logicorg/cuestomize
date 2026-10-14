@@ -19,13 +19,13 @@ func TestRemoteModule_GetReference(t *testing.T) {
 		{
 			name: "uses ref when present",
 			module: RemoteModule{
-				Ref:      "ghcr.io/workday/module:v1.0.0",
+				Ref:      "ghcr.io/logicorg/module:v1.0.0",
 				Registry: "old-registry.io",
 				Repo:     "old-repo",
 				Tag:      "old-tag",
 			},
 			wantRegistry: "ghcr.io",
-			wantRepo:     "workday/module",
+			wantRepo:     "logicorg/module",
 			wantRef:      "v1.0.0",
 			wantErr:      false,
 		},
@@ -75,10 +75,10 @@ func TestRemoteModule_GetReference(t *testing.T) {
 			name: "constructs without tag defaults to empty",
 			module: RemoteModule{
 				Registry: "ghcr.io",
-				Repo:     "workday/module",
+				Repo:     "logicorg/module",
 			},
 			wantRegistry: "ghcr.io",
-			wantRepo:     "workday/module",
+			wantRepo:     "logicorg/module",
 			wantRef:      "",
 			wantErr:      false,
 		},
@@ -120,7 +120,7 @@ func TestRemoteModule_BackwardsCompatibility(t *testing.T) {
 	t.Run("deprecated fields still work", func(t *testing.T) {
 		module := RemoteModule{
 			Registry: "ghcr.io",
-			Repo:     "workday/module",
+			Repo:     "logicorg/module",
 			Tag:      "v1.0.0",
 		}
 
@@ -128,7 +128,7 @@ func TestRemoteModule_BackwardsCompatibility(t *testing.T) {
 		require.NoError(t, err, "GetReference() unexpected error = %v", err)
 
 		assert.Equal(t, "ghcr.io", ref.Registry)
-		assert.Equal(t, "workday/module", ref.Repository)
+		assert.Equal(t, "logicorg/module", ref.Repository)
 		assert.Equal(t, "v1.0.0", ref.Reference)
 	})
 

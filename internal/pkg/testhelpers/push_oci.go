@@ -3,7 +3,7 @@ package testhelpers
 import (
 	"testing"
 
-	"github.com/Workday/cuestomize/pkg/oci"
+	"github.com/logicorg/cuestomize/pkg/oci"
 	ocispec "github.com/opencontainers/image-spec/specs-go/v1"
 	"oras.land/oras-go/v2/registry/remote"
 )

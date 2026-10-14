@@ -5,7 +5,7 @@ metadata:
   annotations:
     config.kubernetes.io/function: |
       container:
-        image: ghcr.io/workday/cuestomize:latest
+        image: ghcr.io/logicorg/cuestomize:latest
         network: true
 input:
   configMapName: example-configmap
@@ -20,4 +20,4 @@ includes:
   name: example-service
   namespace: example-namespace
 remoteModule:
-  ref: ghcr.io/workday/cuestomize/cuemodules/cuestomize-examples-simple:latest
+  ref: ghcr.io/logicorg/cuestomize/cuemodules/cuestomize-examples-simple:latest

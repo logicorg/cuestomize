@@ -4,10 +4,10 @@ import (
 	"context"
 	"os"
 
-	"github.com/Workday/cuestomize/api"
-	"github.com/Workday/cuestomize/pkg/cuerrors"
-	"github.com/Workday/cuestomize/pkg/cuestomize"
-	"github.com/Workday/cuestomize/pkg/cuestomize/model"
+	"github.com/logicorg/cuestomize/api"
+	"github.com/logicorg/cuestomize/pkg/cuerrors"
+	"github.com/logicorg/cuestomize/pkg/cuestomize"
+	"github.com/logicorg/cuestomize/pkg/cuestomize/model"
 
 	kyaml "sigs.k8s.io/kustomize/kyaml/yaml"
 )

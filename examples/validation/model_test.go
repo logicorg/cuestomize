@@ -4,9 +4,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/Workday/cuestomize/api"
-	"github.com/Workday/cuestomize/pkg/cuestomize"
-	"github.com/Workday/cuestomize/pkg/cuestomize/model"
+	"github.com/logicorg/cuestomize/api"
+	"github.com/logicorg/cuestomize/pkg/cuestomize"
+	"github.com/logicorg/cuestomize/pkg/cuestomize/model"
 	"github.com/stretchr/testify/assert"
 
 	kyaml "sigs.k8s.io/kustomize/kyaml/yaml"
@@ -22,7 +22,7 @@ metadata:
     config.cuestomize.io/validator: "true"
     config.kubernetes.io/function: |
       container:
-        image: ghcr.io/workday/cuestomize:latest
+        image: ghcr.io/logicorg/cuestomize:latest
         network: true
 input:
   unknownField: true

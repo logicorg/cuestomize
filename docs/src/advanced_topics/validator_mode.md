@@ -12,7 +12,7 @@ To enable validator mode, add the following annotation to your KRM function conf
 config.cuestomize.io/validator: "true"
 ```
 
-An example of a KRM function configuration that enables validator mode and includes a CUE schema for validating Kubernetes workloads resources can be found in the [examples/validation/kustomize/validator.yaml](https://github.com/Workday/cuestomize/blob/main/examples/validation/kustomize/validator.yaml).
+An example of a KRM function configuration that enables validator mode and includes a CUE schema for validating Kubernetes workloads resources can be found in the [examples/validation/kustomize/validator.yaml](https://github.com/logicorg/cuestomize/blob/main/examples/validation/kustomize/validator.yaml).
 
 The following is an example of a KRM function configuration that enables validator mode and forwards all `v1`, `apps/v1`, and `batch/v1` resources to the CUE module for validation:
 
@@ -25,7 +25,7 @@ metadata:
     config.cuestomize.io/validator: "true"
 ~    config.kubernetes.io/function: |
 ~      container:
-~        image: ghcr.io/workday/cuestomize:latest
+~        image: ghcr.io/logicorg/cuestomize:latest
 ~        network: true
 includes:
   - group: ""
@@ -35,7 +35,7 @@ includes:
   - group: batch
     version: v1
 remoteModule:
-  ref: github.com/workday/cuestomize/cuemodules/cuestomize-examples-validation:latest
+  ref: github.com/logicorg/cuestomize/cuemodules/cuestomize-examples-validation:latest
 ```
 
 ## Validator CUE Module

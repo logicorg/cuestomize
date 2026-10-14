@@ -18,7 +18,7 @@ func (m *Cuestomize) PublishExamples(
 	buildContext *dagger.Directory,
 	// +default="ghcr.io"
 	registry string,
-	// +default="workday/cuestomize/cuemodules/cuestomize-examples"
+	// +default="logicorg/cuestomize/cuemodules/cuestomize-examples"
 	repositoryPrefix string,
 	// +default="nightly"
 	version string,

@@ -6,8 +6,8 @@ import (
 	"fmt"
 
 	"cuelang.org/go/cue"
-	registryauth "github.com/Workday/cuestomize/pkg/registry_auth"
 	"github.com/go-logr/logr"
+	registryauth "github.com/logicorg/cuestomize/pkg/registry_auth"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"oras.land/oras-go/v2/registry/remote/auth"

@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/Workday/cuestomize/internal/pkg/testhelpers"
+	"github.com/logicorg/cuestomize/internal/pkg/testhelpers"
 	"github.com/stretchr/testify/require"
 	"oras.land/oras-go/v2/registry"
 	"oras.land/oras-go/v2/registry/remote"

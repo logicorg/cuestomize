@@ -6,7 +6,7 @@ metadata:
     config.cuestomize.io/validator: "true" # tells the function to run as a validator
     config.kubernetes.io/function: |
       container:
-        image: ghcr.io/workday/cuestomize:latest
+        image: ghcr.io/logicorg/cuestomize:latest
         network: true
 includes:
 - group: ""
@@ -16,4 +16,4 @@ includes:
 - group: batch
   version: v1
 remoteModule:
-  ref: ghcr.io/workday/cuestomize/cuemodules/cuestomize-examples-validation:latest
+  ref: ghcr.io/logicorg/cuestomize/cuemodules/cuestomize-examples-validation:latest

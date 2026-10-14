@@ -6,10 +6,10 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/Workday/cuestomize/api"
-	"github.com/Workday/cuestomize/internal/pkg/files"
-	"github.com/Workday/cuestomize/pkg/oci/fetcher"
 	"github.com/go-logr/logr"
+	"github.com/logicorg/cuestomize/api"
+	"github.com/logicorg/cuestomize/internal/pkg/files"
+	"github.com/logicorg/cuestomize/pkg/oci/fetcher"
 	"oras.land/oras-go/v2/registry"
 	"oras.land/oras-go/v2/registry/remote/auth"
 	kyaml "sigs.k8s.io/kustomize/kyaml/yaml"
