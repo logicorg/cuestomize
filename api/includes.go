@@ -2,6 +2,7 @@ package api
 
 import (
 	"cuelang.org/go/cue"
+	"sigs.k8s.io/kustomize/kyaml/yaml"
 	kyaml "sigs.k8s.io/kustomize/kyaml/yaml"
 )
 
@@ -57,29 +58,21 @@ func (i Includes) initialiseMap(include *kyaml.RNode) {
 	}
 }
 
-func dropNullLabelsAnnotations(md interface{}, labels, annotations bool) {
-	if m, ok := md.(map[string]interface{}); ok {
-		if labels {
-			if x, exists := m["labels"]; exists && x == nil {
-				delete(m, "labels")
-			}
-		}
-		if annotations {
-			if x, exists := m["annotations"]; exists && x == nil {
-				delete(m, "annotations")
-			}
-		}
-	}
-}
-
 func cleanObject(o interface{}, labels, annotations bool) {
-	obj := o.(map[string]interface{})
+	rNode := o.(*yaml.RNode)
 
-	dropNullLabelsAnnotations(obj["metadata"], labels, annotations)
-
-	if spec, ok := obj["spec"].(map[string]interface{}); ok {
-		if tmpl, ok := spec["template"].(map[string]interface{}); ok {
-			dropNullLabelsAnnotations(tmpl["metadata"], labels, annotations)
+	for _, path := range [][]string{{"metadata"}, {"spec", "template", "metadata"}} {
+		meta, err := rNode.Pipe(yaml.Lookup(path...))
+		if err != nil || meta.IsNil() {
+			continue
+		}
+		for field, enabled := range map[string]bool{"labels": labels, "annotations": annotations} {
+			if !enabled {
+				continue
+			}
+			if v, err := meta.Pipe(yaml.Get(field)); err == nil && v.IsTaggedNull() {
+				_, _ = meta.Pipe(yaml.Clear(field))
+			}
 		}
 	}
 }
