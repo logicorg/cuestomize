@@ -382,3 +382,277 @@ func TestIncludes_PruneNullMetadata_MultipleIncludes(t *testing.T) {
 		assert.Nil(t, meta.Field("annotations"), "annotations not pruned for %s", node.GetName())
 	}
 }
+
+func TestIncludes_PruneNulls(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    string
+		expected string
+	}{
+		{
+			name: "prune top-level and metadata nulls",
+			input: `apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config1
+  labels: null
+  annotations: ~
+data: null
+`,
+			expected: `apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config1
+`,
+		},
+		{
+			name: "prune nested nulls",
+			input: `apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy1
+spec:
+  replicas: null
+  template:
+    metadata:
+      labels:
+        app: foo
+      annotations:
+    spec:
+      containers:
+      - name: app
+        image: foo
+        resources: null
+        env:
+        - name: FOO
+          value: null
+`,
+			expected: `apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy1
+spec:
+  template:
+    metadata:
+      labels:
+        app: foo
+    spec:
+      containers:
+      - name: app
+        image: foo
+        env:
+        - name: FOO
+`,
+		},
+		{
+			name: "keep null sequence items",
+			input: `apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config1
+list:
+- null
+- foo
+`,
+			expected: `apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config1
+list:
+- null
+- foo
+`,
+		},
+		{
+			name: "keep empty values, falsy values and quoted null strings",
+			input: `apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config1
+  labels: {}
+data:
+  quoted: "null"
+  empty: ""
+  zero: 0
+  false: false
+  list: []
+`,
+			expected: `apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config1
+  labels: {}
+data:
+  quoted: "null"
+  empty: ""
+  zero: 0
+  false: false
+  list: []
+`,
+		},
+		{
+			name: "map left empty after pruning is kept",
+			input: `apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy1
+spec:
+  selector:
+    matchLabels: null
+  template:
+    metadata:
+      labels:
+        app: null
+`,
+			expected: `apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy1
+spec:
+  selector: {}
+  template:
+    metadata:
+      labels: {}
+`,
+		},
+		{
+			name: "keep null values in configmap data and binaryData",
+			input: `apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config1
+  labels: null
+data:
+  foo: null
+  bar: baz
+binaryData:
+  foo: null
+`,
+			expected: `apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config1
+data:
+  foo: null
+  bar: baz
+binaryData:
+  foo: null
+`,
+		},
+		{
+			name: "keep null values in secret data and stringData",
+			input: `apiVersion: v1
+kind: Secret
+metadata:
+  name: secret1
+  annotations: null
+data:
+  foo: null
+stringData:
+  foo: null
+type: null
+`,
+			expected: `apiVersion: v1
+kind: Secret
+metadata:
+  name: secret1
+data:
+  foo: null
+stringData:
+  foo: null
+`,
+		},
+		{
+			name: "prune null configmap data field itself",
+			input: `apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config1
+data: null
+binaryData: ~
+`,
+			expected: `apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config1
+`,
+		},
+		{
+			name: "prune null data values of other kinds",
+			input: `apiVersion: example.com/v1
+kind: ConfigMap
+metadata:
+  name: config1
+data:
+  foo: null
+  bar: baz
+`,
+			expected: `apiVersion: example.com/v1
+kind: ConfigMap
+metadata:
+  name: config1
+data:
+  bar: baz
+`,
+		},
+		{
+			name: "prune nulls nested under other configmap fields",
+			input: `apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config1
+  labels:
+    data: null
+extra:
+  data:
+    foo: null
+`,
+			expected: `apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config1
+  labels: {}
+extra:
+  data: {}
+`,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			node, err := kyaml.Parse(tt.input)
+			require.NoError(t, err)
+
+			includes := make(Includes)
+			includes.Add(node)
+			require.NoError(t, includes.PruneNulls())
+
+			got := includes[node.GetApiVersion()][node.GetKind()][node.GetNamespace()][node.GetName()].(*kyaml.RNode)
+			assert.Equal(t, tt.expected, got.MustString())
+		})
+	}
+}
+
+func TestIncludes_PruneNulls_MultipleIncludes(t *testing.T) {
+	inputs := []string{
+		"apiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: config1\n  namespace: default\ndata: null\n",
+		"apiVersion: v1\nkind: Secret\nmetadata:\n  name: secret1\n  namespace: kube-system\ndata: null\n",
+		"apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: deploy1\n  namespace: app\ndata: null\n",
+	}
+
+	includes := make(Includes)
+	var nodes []*kyaml.RNode
+	for _, in := range inputs {
+		node, err := kyaml.Parse(in)
+		require.NoError(t, err)
+		includes.Add(node)
+		nodes = append(nodes, node)
+	}
+
+	require.NoError(t, includes.PruneNulls())
+
+	for _, node := range nodes {
+		assert.Nil(t, node.Field("data"), "data not pruned for %s", node.GetName())
+	}
+}

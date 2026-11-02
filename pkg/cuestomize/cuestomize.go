@@ -42,7 +42,12 @@ func Cuestomize(ctx context.Context, items []*kyaml.RNode, config *api.KRMInput,
 
 	pruneLabels := ShouldPruneLabels(config)
 	pruneAnnotations := ShouldPruneAnnotations(config)
-	if pruneLabels || pruneAnnotations {
+	if ShouldPruneNulls(config) {
+		// superset of the labels and annotations pruning
+		if err := includes.PruneNulls(); err != nil {
+			return nil, fmt.Errorf("failed to prune null fields from includes: %w", err)
+		}
+	} else if pruneLabels || pruneAnnotations {
 		includes.PruneNullMetadata(pruneLabels, pruneAnnotations)
 	}
 
