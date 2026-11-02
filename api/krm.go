@@ -44,7 +44,8 @@ func ExtractIncludes(ctx context.Context, krm *KRMInput, items []*kyaml.RNode) (
 			}
 			if itemMatches {
 				includesCount++
-				includes.Add(item)
+				// add a copy, so that changes to the includes (e.g. pruning) don't leak into the items returned to kustomize
+				includes.Add(item.Copy())
 			}
 		}
 		if includesCount == 0 {
