@@ -27,6 +27,7 @@ All these options are documented below.
 | -------------------------------- | ---------------------------------------------------------------------------------- |
 | `config.kubernetes.io/function`  | Contains the KRM function configuration.                                           |
 | `config.cuestomize.io/validator` | If set to `"true"`, tells the function to use the CUE module for _validation_ only |
+| `config.cuestomize.io/prune-nulls` | If set to `"true"`, removes all fields explicitly set to `null` from the includes before passing them to CUE |
 
 ##### Annotation – `config.kubernetes.io/function`
 
@@ -66,6 +67,16 @@ Setting `config.cuestomize.io/validator: "true"` in the configuration annotation
 This is useful if you want to validate a set of manifests with some CUE constraints, e.g. ensuring that all Deployments use a particular `securityContext`, or that resources in certain namespaces has a particular label, etc.
 
 When used in validator mode, CUE will be used to validate, instead of to generate, and the behaviour you can expect is the same as running [`cue eval` command](https://cuelang.org/docs/reference/command/cue-help-eval/).
+
+##### Annotation – `config.cuestomize.io/prune-nulls`
+
+Setting `config.cuestomize.io/prune-nulls: "true"` in the configuration annotations tells Cuestomize to remove every field explicitly set to `null` (e.g. `annotations: null`, `resources: ~`, or a key with no value) from the includes, at any depth, before passing them to the CUE model.
+
+Kubernetes treats a `null` field the same as an unset one, but in CUE `null` is a concrete value that conflicts with most schemas (e.g. `annotations: null` does not unify with `annotations?: [string]: string`). Pruning them lets the includes unify with such schemas.
+
+Only map fields are pruned: `null` items in lists are kept, as removing them would shift the other items' indexes. Maps left empty after pruning are kept as `{}`.
+
+Null values inside the string maps of `v1` ConfigMaps (`data`, `binaryData`) and Secrets (`data`, `stringData`) are kept: in a string map, Kubernetes sets a key with a `null` value to `""` rather than leaving it unset, so pruning it would change its meaning. The fields themselves (e.g. `data: null`) are still pruned.
 
 ### Input
 

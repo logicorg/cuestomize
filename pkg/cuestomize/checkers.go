@@ -16,6 +16,8 @@ const (
 	PruneLabelsAnnotationKey = "config.cuestomize.io/prune-null-labels"
 	// PruneAnnotationsAnnotationKey is the annotation key to control null annotations pruning
 	PruneAnnotationsAnnotationKey = "config.cuestomize.io/prune-null-annotations"
+	// PruneNullsAnnotationKey is the annotation key to control pruning of all null fields
+	PruneNullsAnnotationKey = "config.cuestomize.io/prune-nulls"
 
 	trueStr = "true"
 )
@@ -46,4 +48,9 @@ func ShouldPruneLabels(config *api.KRMInput) bool {
 func ShouldPruneAnnotations(config *api.KRMInput) bool {
 	return config.Annotations != nil &&
 		config.Annotations[PruneAnnotationsAnnotationKey] == trueStr
+}
+
+func ShouldPruneNulls(config *api.KRMInput) bool {
+	return config.Annotations != nil &&
+		config.Annotations[PruneNullsAnnotationKey] == trueStr
 }
