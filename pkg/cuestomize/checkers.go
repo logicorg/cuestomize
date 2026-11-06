@@ -11,8 +11,15 @@ import (
 const (
 	// ValidatorAnnotationKey is the annotation key that marks a CUE function as a validator.
 	ValidatorAnnotationKey = "config.cuestomize.io/validator"
-	// ValidatorAnnotationValue is the value of the annotation that marks a CUE function as a validator.
-	ValidatorAnnotationValue = "true"
+
+	// PruneLabelsAnnotationKey is the annotation key to control null labels pruning
+	PruneLabelsAnnotationKey = "config.cuestomize.io/prune-null-labels"
+	// PruneAnnotationsAnnotationKey is the annotation key to control null annotations pruning
+	PruneAnnotationsAnnotationKey = "config.cuestomize.io/prune-null-annotations"
+	// PruneNullsAnnotationKey is the annotation key to control pruning of all null fields
+	PruneNullsAnnotationKey = "config.cuestomize.io/prune-nulls"
+
+	trueStr = "true"
 )
 
 // CheckInstances checks if any of the instances have an error and returns an error if so.
@@ -30,5 +37,20 @@ func CheckInstances(ctx context.Context, instances []*build.Instance) error {
 // ShouldActAsValidator checks if the KRMInput configuration has the validator annotation set.
 func ShouldActAsValidator(config *api.KRMInput) bool {
 	return config.Annotations != nil &&
-		config.Annotations[ValidatorAnnotationKey] == ValidatorAnnotationValue
+		config.Annotations[ValidatorAnnotationKey] == trueStr
+}
+
+func ShouldPruneLabels(config *api.KRMInput) bool {
+	return config.Annotations != nil &&
+		config.Annotations[PruneLabelsAnnotationKey] == trueStr
+}
+
+func ShouldPruneAnnotations(config *api.KRMInput) bool {
+	return config.Annotations != nil &&
+		config.Annotations[PruneAnnotationsAnnotationKey] == trueStr
+}
+
+func ShouldPruneNulls(config *api.KRMInput) bool {
+	return config.Annotations != nil &&
+		config.Annotations[PruneNullsAnnotationKey] == trueStr
 }
