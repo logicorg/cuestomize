@@ -1,5 +1,7 @@
 # Cuestomize
 
+> Forked from [Workday/cuestomize](https://github.com/Workday/cuestomize).
+
 [![Go Reference](https://pkg.go.dev/badge/github.com/logicorg/cuestomize.svg)](https://pkg.go.dev/github.com/logicorg/cuestomize)
 
 Cuestomize is a Kubernetes Package Manager using CUE-lang and integrated in Kustomize.

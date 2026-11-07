@@ -1,5 +1,7 @@
 # Cuestomize Introduction
 
+> Forked from [Workday/cuestomize](https://github.com/Workday/cuestomize).
+
 **Cuestomize** is a _Kubernetes Package Manager_ using _CUE-lang_ and integrated in _Kustomize_.
 
 It is implemented as a Kustomize _KRM function_ that reads a CUE model, and optionally some input resources from the Kustomize stream, generates some manifests, and passes them back to the Kustomize stream.
