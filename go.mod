@@ -8,7 +8,7 @@ require (
 	github.com/opencontainers/image-spec v1.1.1
 	github.com/stretchr/testify v1.12.1
 	k8s.io/api v0.37.1
-	k8s.io/apimachinery v0.37.1
+	k8s.io/apimachinery v0.37.2
 	k8s.io/kube-openapi v0.0.0-20261104182252-5bee61fc5225
 	oras.land/oras-go/v2 v2.6.3
 	sigs.k8s.io/kustomize/api v0.21.3
